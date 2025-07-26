@@ -10,9 +10,11 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
-  origin: "*",
+  origin: "http://localhost:3000",
+  credentials: true,
   exposedHeaders: ["Content-Disposition"]
 }));
+
 
 // Setup Multer for PDF upload
 const upload = multer({ dest: "uploads/" });
