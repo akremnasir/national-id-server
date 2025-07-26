@@ -3,7 +3,15 @@ FROM node:18-slim
 
 # Install Python, libGL, and required tools
 RUN apt-get update && \
-    apt-get install -y python3 python3-venv python3-pip libgl1 && \
+    apt-get install -y \
+        python3 \
+        python3-venv \
+        python3-pip \
+        libglib2.0-0 \
+        libsm6 \
+        libxrender1 \
+        libxext6 \
+        libgl1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set work directory
