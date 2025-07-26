@@ -1,12 +1,6 @@
 services:
   - type: web
-    name: id-generator-backend
-    env: node
-    buildCommand: npm install
-    startCommand: node server.js
-    envVars:
-      - key: PYTHONUNBUFFERED
-        value: "1"
-    buildFilter:
-      paths: [ "national-id-server/**", "generate_id.py", "id_generator.py", "fonts/**", "blank*.jpg" ]
+    name: national-id-generator
+    env: docker
     plan: free
+    dockerfilePath: ./Dockerfile
