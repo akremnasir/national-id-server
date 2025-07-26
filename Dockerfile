@@ -33,4 +33,4 @@ EXPOSE 5000
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Start the app (adjust if using something like nodemon)
-CMD ["node", "app/app.js"]
+CMD ["node", "app.js"]
