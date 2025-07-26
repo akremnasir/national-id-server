@@ -1,10 +1,10 @@
 # Base image with Node.js and Python
 FROM node:18-slim
 
-# Install Python and pip
+# Install Python 3, pip, and virtualenv support
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    pip3 install --upgrade pip
+    apt-get install -y python3 python3-pip python3-venv && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
@@ -15,13 +15,13 @@ RUN npm install
 
 # Copy Python dependencies and install
 COPY requirements.txt ./
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy everything else
+# Copy the rest of the app
 COPY . .
 
-# Expose backend port
+# Expose the server port
 EXPOSE 5000
 
-# Start the server
+# Start the app
 CMD ["node", "app.js"]
