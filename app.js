@@ -21,7 +21,11 @@ const PORT = process.env.PORT || 5000;
 //   credentials: true,
 //   exposedHeaders: ["Content-Disposition"]
 // }));
-app.use(cors());
+
+app.use(cors({
+  origin: 'https://id-for-you.netlify.app', // allow only your frontend
+  //credentials: true // if you use cookies or need it, otherwise remove this
+}));
 
 
 // Setup Multer for PDF upload
