@@ -1,27 +1,36 @@
-# Base image with Node.js and Python
+# Base image with Node.js and Python support
 FROM node:18-slim
 
-# Install Python 3, pip, and virtualenv support
+# Install Python and required tools
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y python3 python3-venv python3-pip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
-WORKDIR /app
+# Set work directory
+WORKDIR /national-id-server
 
-# Copy Node.js dependencies and install
+# Create a Python virtual environment
+RUN python3 -m venv /opt/venv
+
+# Ensure pip inside venv is up-to-date
+RUN /opt/venv/bin/pip install --upgrade pip
+
+# Copy Python requirements and install them using the venv's pip
+COPY requirements.txt .
+RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+
+# Copy Node.js files and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy Python dependencies and install
-COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the app
+# Copy the rest of your app
 COPY . .
 
-# Expose the server port
+# Expose the port
 EXPOSE 5000
 
-# Start the app
-CMD ["node", "app.js"]
+# Use venv for Python scripts and run your Node app
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Start the app (adjust if using something like nodemon)
+CMD ["node", "app/app.js"]
