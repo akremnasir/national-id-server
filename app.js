@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: 'https://id-for-you.netlify.app', // allow only your frontend
-  //credentials: true // if you use cookies or need it, otherwise remove this
+  credentials: true // if you use cookies or need it, otherwise remove this
 }));
 
 
